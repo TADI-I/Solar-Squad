@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html data-bs-theme="light" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Dashboard - Sun Solution</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
+    <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
+    <link rel="stylesheet" href="assets/css/Navigation-Menu.css">
+    <link rel="stylesheet" href="assets/css/Team.css">
+</head>
+
+<body id="page-top">
+    <div id="wrapper">
+        <nav class="navbar align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0 navbar-dark">
+            <div class="container-fluid d-flex flex-column p-0"><a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#">
+                    <div class="sidebar-brand-icon rotate-n-15"><i class="fas fa-laugh-wink"></i></div>
+                    <div class="sidebar-brand-text mx-3"><span>Sun Solution</span></div>
+                </a>
+                <hr class="sidebar-divider my-0">
+                <ul class="navbar-nav text-light" id="accordionSidebar">
+                    <li class="nav-item"><a class="nav-link active" href="/dashboard.html"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="/profile.html"><i class="fas fa-user"></i><span>Profile</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="/table.html"><i class="fas fa-table"></i><span>Table</span></a></li>
+                    <li class="nav-item"></li>
+                    <li class="nav-item"></li>
+                </ul>
+                <div class="text-center d-none d-md-inline"><button class="btn rounded-circle border-0" id="sidebarToggle" type="button"></button></div>
+            </div>
+        </nav>
+        <div class="d-flex flex-column" id="content-wrapper">
+            <div id="content">
+                <nav class="navbar navbar-expand bg-white shadow mb-4 topbar" style="position: relative;--bs-primary: #4e73df;--bs-primary-rgb: 78,115,223;">
+                    <div class="container-fluid"><button class="btn btn-link d-md-none rounded-circle me-3" id="sidebarToggleTop" type="button"><i class="fas fa-bars"></i></button>
+                        <nav class="navbar navbar-expand-md navbar-light" style="height: 50px;position: fixed;">
+                            <div class="container-fluid">
+                                <div><a class="navbar-brand d-none" href="#"> </a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button></div>
+                                <div class="collapse navbar-collapse" id="navcol-1">
+                                    <ul class="navbar-nav main-nav" style="color: var(--bs-blue);text-shadow: 0px 0px;backdrop-filter: opacity(1);-webkit-backdrop-filter: opacity(1);">
+                                        <li class="nav-item"><a id="home" class="nav-link" style="color: var(--bs-primary);" href="login.html">Login</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="register.html" style="color: var(--bs-primary);">Register</a></li>
+                                        <li class="nav-item"></li>
+                                        <li class="nav-item"></li>
+                                        <li class="nav-item"></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </nav>
+                        <ul class="navbar-nav flex-nowrap ms-auto"></ul>
+                    </div>
+                </nav>
+                <div class="container-fluid">
+                    <div class="d-sm-flex justify-content-between align-items-center mb-4">
+                        <h3 class="text-dark mb-0">Dashboard</h3><script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script><a class="btn btn-primary btn-sm" role="button" id="generate-report" href="#"><i class="fas fa-download text-white-50 fa-sm"></i> Generate Report<div></div></a><script>
+    document.getElementById("generateReport").addEventListener("click", function () {
+        // Define the report data
+        const reportData = [
+            ["Week Energy Usage Summary"],
+            ["Metric", "Percentage", "KWh"],
+            ["Energy Consumed", document.getElementById("consumedPercentage").innerText, document.getElementById("consumedKWh").innerText],
+            ["Energy Saved", document.getElementById("savedPercentage").innerText, document.getElementById("savedKWh").innerText],
+            ["Energy Available", document.getElementById("availablePercentage").innerText, document.getElementById("availableKWh").innerText],
+            ["Energy Generated This Week", document.getElementById("generatedPercentage").innerText, document.getElementById("generatedKWh").innerText],
+            [],
+            ["Power Overview"],
+            ["Power Metric", "Value"],
+            ["Power Available", document.getElementById("availableKWh").innerText],
+            ["Power Generated This Week", document.getElementById("generatedKWh").innerText],
+            ["Power Saved", document.getElementById("savedKWh").innerText],
+            ["Power Consumption Warning", document.getElementById("consumedKWh").innerText]
+        ];
+
+        // Create a new workbook and worksheet
+        let wb = XLSX.utils.book_new();
+        let ws = XLSX.utils.aoa_to_sheet(reportData);
+
+        // Auto-fit column width
+        let wscols = [
+            { wch: 25 }, // First column
+            { wch: 15 }, // Second column
+            { wch: 15 }  // Third column
+        ];
+        ws["!cols"] = wscols;
+
+        // Add worksheet to the workbook
+        XLSX.utils.book_append_sheet(wb, ws, "Energy Report");
+
+        // Save the file
+        XLSX.writeFile(wb, "Energy_Report.xlsx");
+    });
+</script>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 col-xl-3 mb-4">
+                            <div class="card shadow border-left-primary py-2">
+                                <div class="card-body">
+                                    <div class="row g-0 align-items-center">
+                                        <div class="col me-2">
+                                            <div class="text-uppercase text-primary fw-bold text-xs mb-1"><span>Consumption</span></div>
+                                            <div class="text-dark fw-bold h5 mb-0"><span id="consumption">43.8kWh</span></div>
+                                        </div>
+                                        <div class="col-auto"><svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="1em" viewBox="0 0 24 24" width="1em" fill="currentColor" class="fa-2x text-gray-300">
+                                                <g>
+                                                    <rect fill="none" height="24" width="24"></rect>
+                                                </g>
+                                                <g>
+                                                    <path d="M14.69,2.21L4.33,11.49c-0.64,0.58-0.28,1.65,0.58,1.73L13,14l-4.85,6.76c-0.22,0.31-0.19,0.74,0.08,1.01h0 c0.3,0.3,0.77,0.31,1.08,0.02l10.36-9.28c0.64-0.58,0.28-1.65-0.58-1.73L11,10l4.85-6.76c0.22-0.31,0.19-0.74-0.08-1.01l0,0 C15.47,1.93,15,1.92,14.69,2.21z"></path>
+                                                </g>
+                                            </svg></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-xl-3 mb-4">
+                            <div class="card shadow border-left-success py-2">
+                                <div class="card-body">
+                                    <div class="row g-0 align-items-center">
+                                        <div class="col me-2">
+                                            <div class="text-uppercase text-success fw-bold text-xs mb-1"><span id="savings">Energy Savings</span></div>
+                                            <div class="text-dark fw-bold h5 mb-0"><span id="energy-savings">12kWh</span></div>
+                                        </div>
+                                        <div class="col-auto"><svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 24 24" width="1em" fill="currentColor" class="fa-2x text-gray-300">
+                                                <path d="M0 0h24v24H0z" fill="none"></path>
+                                                <path d="M9 21c0 .5.4 1 1 1h4c.6 0 1-.5 1-1v-1H9v1zm3-19C8.1 2 5 5.1 5 9c0 2.4 1.2 4.5 3 5.7V17c0 .5.4 1 1 1h6c.6 0 1-.5 1-1v-2.3c1.8-1.3 3-3.4 3-5.7 0-3.9-3.1-7-7-7z"></path>
+                                            </svg></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-xl-3 mb-4">
+                            <div class="card shadow border-left-info py-2">
+                                <div class="card-body">
+                                    <div class="row g-0 align-items-center">
+                                        <div class="col me-2">
+                                            <div class="text-uppercase text-info fw-bold text-xs mb-1"><span id="available-power">Power available</span></div>
+                                            <div class="row g-0 align-items-center">
+                                                <div class="col-auto">
+                                                    <div class="text-dark fw-bold h5 mb-0 me-3"><span id="power-available">35%</span></div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="progress progress-sm">
+                                                        <div class="progress-bar bg-info" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 50%;"><span class="visually-hidden">50%</span></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-auto"><svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 24 24" width="1em" fill="currentColor" class="fa-2x text-gray-300">
+                                                <path d="M0 0h24v24H0z" fill="none"></path>
+                                                <path d="M15.67 4H14V2h-4v2H8.33C7.6 4 7 4.6 7 5.33v15.33C7 21.4 7.6 22 8.33 22h7.33c.74 0 1.34-.6 1.34-1.33V5.33C17 4.6 16.4 4 15.67 4z"></path>
+                                            </svg></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-xl-3 mb-4">
+                            <div class="card shadow border-left-warning py-2">
+                                <div class="card-body" id="expected-energy">
+                                    <div class="row g-0 align-items-center">
+                                        <div class="col me-2">
+                                            <div class="text-uppercase text-warning fw-bold text-xs mb-1"><span>expected energy</span></div>
+                                            <div class="text-dark fw-bold h5 mb-0"><span id="expected-energy">18kWh</span></div>
+                                        </div>
+                                        <div class="col-auto"><svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 24 24" width="1em" fill="currentColor" class="fa-2x text-gray-300">
+                                                <path d="M0 0h24v24H0z" fill="none"></path>
+                                                <path d="M13 2.05v3.03c3.39.49 6 3.39 6 6.92 0 .9-.18 1.75-.48 2.54l2.6 1.53c.56-1.24.88-2.62.88-4.07 0-5.18-3.95-9.45-9-9.95zM12 19c-3.87 0-7-3.13-7-7 0-3.53 2.61-6.43 6-6.92V2.05c-5.06.5-9 4.76-9 9.95 0 5.52 4.47 10 9.99 10 3.31 0 6.24-1.61 8.06-4.09l-2.6-1.53C16.17 17.98 14.21 19 12 19z"></path>
+                                            </svg></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-7 col-xl-8 col-xxl-8 offset-xxl-0">
+                            <div class="card shadow mb-4">
+                                <div class="card-header d-flex justify-content-between align-items-center">
+                                    <h6 class="text-primary fw-bold m-0" id="intake-1">Energy Intake</h6>
+                                    <div class="dropdown no-arrow"><button class="btn btn-link btn-sm dropdown-toggle" aria-expanded="false" data-bs-toggle="dropdown" type="button"><i class="fas fa-ellipsis-v text-gray-400"></i></button>
+                                        <div class="dropdown-menu shadow dropdown-menu-end animated--fade-in">
+                                            <p class="text-center dropdown-header">dropdown header:</p><a class="dropdown-item" href="#">&nbsp;Action</a><a class="dropdown-item" href="#">&nbsp;Another action</a>
+                                            <div class="dropdown-divider"></div><a class="dropdown-item" href="#">&nbsp;Something else here</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body"><script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+    /* Container for each chart with max width and height */
+    .chart-container {
+        max-width: 600px;
+        max-height: 400px;
+        margin: auto;
+        padding-bottom: 30px; /* Space between charts */
+    }
+
+    canvas {
+        width: 100%;
+        height: 100%;
+    }
+</style>
+
+<!-- Container for Line Chart -->
+<div class="chart-container">
+    <canvas id="myChart"></canvas>
+</div>
+
+
+
+<script>
+    // Line Chart
+    const initialDataLine = {
+        labels: ['1', '2', '3', '4', '5'],
+        datasets: [{
+            label: 'Live Data',
+            data: [12, 19, 3, 5, 2],
+            borderColor: 'rgb(75, 192, 192)',
+            fill: false,
+        }]
+    };
+
+    const configLine = {
+        type: 'line',
+        data: initialDataLine,
+        options: {
+            responsive: true,
+            scales: {
+                x: {
+                    beginAtZero: true,
+                },
+                y: {
+                    beginAtZero: true,
+                }
+            },
+            animation: {
+                duration: 0
+            }
+        }
+    };
+
+    const ctxLine = document.getElementById('myChart').getContext('2d');
+    const myLineChart = new Chart(ctxLine, configLine);
+
+    // Update the Line Chart every 2 seconds
+    function updateLineChart() {
+        const newData = initialDataLine.datasets[0].data;
+        newData.shift(); // Remove the first data point
+        newData.push(Math.floor(Math.random() * 30) + 1); // Add a new random data point
+
+        myLineChart.update();
+    }
+
+    setInterval(updateLineChart, 2000);
+
+    // Pie Chart
+    
+</script></div>
+                            </div>
+                            <div class="card shadow mb-4">
+                                <div class="card-header d-flex justify-content-between align-items-center">
+                                    <h6 class="text-primary fw-bold m-0">Energy Efficiency</h6>
+                                    <div class="dropdown no-arrow"><button class="btn btn-link btn-sm dropdown-toggle" aria-expanded="false" data-bs-toggle="dropdown" type="button"><i class="fas fa-ellipsis-v text-gray-400"></i></button>
+                                        <div class="dropdown-menu shadow dropdown-menu-end animated--fade-in">
+                                            <p class="text-center dropdown-header">dropdown header:</p><a class="dropdown-item" href="#">&nbsp;Action</a><a class="dropdown-item" href="#">&nbsp;Another action</a>
+                                            <div class="dropdown-divider"></div><a class="dropdown-item" href="#">&nbsp;Something else here</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body"><div class="chart-container">
+    <canvas id="myPieChart"></canvas>
+</div>
+<script>
+const initialDataPie = {
+        labels: ['Red', 'Blue', 'Yellow'],
+        datasets: [{
+            label: 'Live Data',
+            data: [12, 19, 3],
+            backgroundColor: ['#FF5733', '#33A1FF', '#FFEB33'],
+            hoverOffset: 4
+        }]
+    };
+
+    const configPie = {
+        type: 'pie',
+        data: initialDataPie,
+        options: {
+            responsive: true,
+            animation: {
+                duration: 0
+            }
+        }
+    };
+
+    const ctxPie = document.getElementById('myPieChart').getContext('2d');
+    const myPieChart = new Chart(ctxPie, configPie);
+
+    // Update the Pie Chart every 2 seconds
+    function updatePieChart() {
+        const newData = initialDataPie.datasets[0].data;
+        newData[0] = Math.floor(Math.random() * 30) + 1;
+        newData[1] = Math.floor(Math.random() * 30) + 1;
+        newData[2] = 100 - newData[0] - newData[1];
+
+        myPieChart.update();
+    }
+
+    setInterval(updatePieChart, 2000);
+</script></div>
+                            </div>
+                        </div>
+                        <div class="col-xxl-4">
+                            <div class="card shadow mb-4">
+                                <div class="card-header d-flex justify-content-between align-items-center">
+                                    <h6 class="text-primary fw-bold m-0" id="intake">Weather &amp; Sun</h6>
+                                    <div class="dropdown no-arrow"><button class="btn btn-link btn-sm dropdown-toggle" aria-expanded="false" data-bs-toggle="dropdown" type="button"><i class="fas fa-ellipsis-v text-gray-400"></i></button>
+                                        <div class="dropdown-menu shadow dropdown-menu-end animated--fade-in">
+                                            <p class="text-center dropdown-header">OPTIONS&nbsp;</p><a class="dropdown-item" onclick="refreshCard()"> Refresh</a>
+<script>
+    function refreshCard() {
+        location.reload();
+    }
+</script>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="container">
+                                        <p id="currentDate">Date: Loading...</p>
+                                        <p id="city">City: Loading...</p>
+                                        <p id="temperature">Temperature: Loading...</p>
+                                        <p id="description">Description: Loading...</p>
+                                        <p id="humidity">Humidity: Loading...</p>
+                                        <h3>Sun Path</h3><canvas id="sunChart"></canvas>
+                                        <div class="info"><span id="dayLength">Expected Sun today : Loading...</span><br>
+                                            <p id="timeLeft">Hours of sun left today: Loading...</p><span id="sunrise"></span><span> - </span><span id="sunset"></span>
+                                        </div>
+                                    </div><script>
+    const apiKey = 'bd5e378503939ddaee76f12ad7a97608';
+    let sunrise, sunset, sunChart, sunData, sunPositionMarker;
+    
+    function getLocationAndData() {
+          document.getElementById("currentDate").textContent = `Date & Time: ${new Date().toLocaleString()}`;
+
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(position => {
+                const lat = position.coords.latitude;
+                const lon = position.coords.longitude;
+                fetchWeather(lat, lon);
+                fetchSunData(lat, lon);
+            }, () => alert("Geolocation failed. Please allow location access."));
+        } else {
+            alert("Geolocation is not supported by your browser.");
+        }
+    }
+
+    function fetchWeather(lat, lon) {
+        const apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`;
+        fetch(apiUrl)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("city").textContent = `City: ${data.name}`;
+                document.getElementById("temperature").textContent = `Temperature: ${data.main.temp}°C`;
+                document.getElementById("description").textContent = `Description: ${data.weather[0].description}`;
+                document.getElementById("humidity").textContent = `Humidity: ${data.main.humidity}%`;
+            })
+            .catch(error => console.error("Error fetching weather data:", error));
+    }
+
+    function fetchSunData(lat, lon) {
+        const apiUrl = `https://api.sunrise-sunset.org/json?lat=${lat}&lng=${lon}&formatted=0`;
+        fetch(apiUrl)
+            .then(response => response.json())
+            .then(data => {
+                sunrise = new Date(data.results.sunrise).getTime();
+                sunset = new Date(data.results.sunset).getTime();
+                let sunriseLocal = new Date(sunrise);
+                let sunsetLocal = new Date(sunset);
+                document.getElementById("sunrise").textContent = `${formatTime(sunriseLocal)} AM Sunrise`;
+                document.getElementById("sunset").textContent = `${formatTime(sunsetLocal)} PM Sunset`;
+                document.getElementById("dayLength").textContent = `Expected Sun today: ${calculateDaylightDuration(sunriseLocal, sunsetLocal)}`;
+                drawSunGraph();
+            })
+            .catch(error => console.error("Error fetching sun data:", error));
+    }
+
+    function formatTime(date) {
+        let hours = date.getHours();
+        let minutes = date.getMinutes();
+        return `${hours}:${minutes < 10 ? "0" : ""}${minutes}`;
+    }
+
+    function calculateDaylightDuration(sunrise, sunset) {
+        let diff = sunset - sunrise;
+        let hours = Math.floor(diff / (1000 * 60 * 60));
+        let minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        return `${hours} hrs ${minutes} mins`;
+    }
+
+    function drawSunGraph() {
+        const ctx = document.getElementById('sunChart').getContext('2d');
+        let now = new Date().getTime();
+        let sunriseHour = new Date(sunrise).getHours();
+        let sunsetHour = new Date(sunset).getHours();
+        let timeNow = new Date().getHours() + new Date().getMinutes() / 60;
+        
+        let dataPoints = [];
+        for (let i = sunriseHour; i <= sunsetHour; i += 0.5) {
+            let height = Math.sin(((i - sunriseHour) / (sunsetHour - sunriseHour)) * Math.PI) * 100;
+            dataPoints.push({ x: i, y: height });
+        }
+
+        let sunPositionY = Math.sin(((timeNow - sunriseHour) / (sunsetHour - sunriseHour)) * Math.PI) * 100;
+        sunPositionMarker = { x: timeNow, y: sunPositionY };
+
+        sunChart = new Chart(ctx, {
+            type: 'scatter',
+            data: {
+                datasets: [
+                    {
+                        label: 'Sun Path',
+                        data: dataPoints,
+                        borderColor: 'orange',
+                        backgroundColor: 'rgba(255, 165, 0, 0.2)',
+                        tension: 0.4,
+                        pointRadius: 5,
+                        pointBackgroundColor: '#ffcc00'
+                    },
+                    {
+                        label: 'Sun Position',
+                        data: [sunPositionMarker],
+                        backgroundColor: 'red',
+                        pointRadius: 7
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        type: 'linear',
+                        min: sunriseHour,
+                        max: sunsetHour,
+                        title: { display: true, text: "Time of Day" }
+                    },
+                    y: {
+                        min: 0,
+                        max: 100,
+                        display: false
+                    }
+                },
+                plugins: {
+                    legend: { display: false }
+                }
+            }
+        });
+
+        setInterval(updateSunPosition, 60000);
+        setInterval(updateTimeLeft, 10000);
+    }
+    
+function updateTimeLeft() {
+    let now = new Date().getTime();
+    let remainingMillis = sunset - now;
+    
+    if (remainingMillis > 0) {
+        let hours = Math.floor(remainingMillis / (1000 * 60 * 60));
+        let minutes = Math.floor((remainingMillis % (1000 * 60 * 60)) / (1000 * 60));
+        document.getElementById("timeLeft").textContent = `Hours of sun left today: ${hours} hrs ${minutes} mins`;
+    } else {
+        document.getElementById("timeLeft").textContent = "The sun has already set.";
+    }
+}
+
+
+    function updateSunPosition() {
+        let timeNow = new Date().getHours() + new Date().getMinutes() / 60;
+        let sunriseHour = new Date(sunrise).getHours();
+        let sunsetHour = new Date(sunset).getHours();
+        let sunPositionY = Math.sin(((timeNow - sunriseHour) / (sunsetHour - sunriseHour)) * Math.PI) * 100;
+
+        sunPositionMarker.x = timeNow;
+        sunPositionMarker.y = sunPositionY;
+
+        sunChart.data.datasets[1].data = [sunPositionMarker];
+
+    
+        sunChart.update();
+    }
+
+    window.onload = getLocationAndData;
+</script>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6 mb-4">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="fw-bold text-primary m-0">Week Energy Usage Summary</h6>
+                                </div>
+                                <div class="card-body" id="weekly-summary">
+                                    <h4 class="fw-bold small">Energy Consumed<span class="float-end" id="consumedPercentage">20%</span></h4>
+                                    <div class="progress mb-4" id="energy-consumed">
+                                        <div class="progress-bar bg-danger" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:20%;"><span class="visually-hidden">50%</span></div>
+                                    </div>
+                                    <h4 class="fw-bold small">Energy Saved<span class="float-end" id="savedPercentage">80%</span></h4>
+                                    <div class="progress mb-4" id="energy-saved">
+                                        <div class="progress-bar bg-warning" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:80%;"><span class="visually-hidden">50%</span></div>
+                                    </div>
+                                    <h4 class="fw-bold small">Energy Available<span class="float-end" id="availablePercentage">80%</span></h4>
+                                    <div class="progress mb-4" id="energy-available">
+                                        <div class="progress-bar bg-primary" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:80%;"><span class="visually-hidden">50%</span></div>
+                                    </div>
+                                    <h4 class="fw-bold small">Energy Generated This Week<span class="float-end" id="generatedPercentage">100%</span></h4>
+                                    <div class="progress mb-4" id="total-energy-generated">
+                                        <div class="progress-bar bg-info" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:100%;"><span class="visually-hidden">50%</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="row">
+                                <div class="col-lg-6 mb-4">
+                                    <div class="card text-white bg-primary shadow">
+                                        <div class="card-body">
+                                            <p class="m-0">Power available</p>
+                                            <p class="text-white-50 small m-0" id="availableKWh">34.8KWh</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 mb-4">
+                                    <div class="card text-white bg-info shadow">
+                                        <div class="card-body">
+                                            <p class="m-0">Power Generated This Week</p>
+                                            <p class="text-white-50 small m-0" id="generatedKWh">58KWh</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 mb-4">
+                                    <div class="card text-white bg-warning shadow">
+                                        <div class="card-body">
+                                            <p class="m-0">Power Saved</p>
+                                            <p class="text-white-50 small m-0" id="savedKWh">46.4KWh</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 mb-4">
+                                    <div class="card text-white bg-danger shadow">
+                                        <div class="card-body">
+                                            <p class="m-0">Power Consumption Warning</p>
+                                            <p class="text-white-50 small m-0" id="consumedKWh">11.6KWh</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <footer class="bg-white sticky-footer">
+                <div class="container my-auto">
+                    <div class="text-center my-auto copyright"><span>Copyright © Sun Solution 2025</span></div>
+                </div>
+            </footer>
+        </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
+    </div>
+    <ul class="nav nav-tabs flex-nowrap ms-auto">
+        <li class="nav-item dropdown d-sm-none no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><i class="fas fa-search"></i></a>
+            <div class="dropdown-menu dropdown-menu-end p-3 animated--grow-in" aria-labelledby="searchDropdown">
+                <form class="me-auto navbar-search w-100">
+                    <div class="input-group"><input class="bg-light border-0 form-control small" type="text" placeholder="Search for ..."><button class="btn btn-primary" type="button"><i class="fas fa-search"></i></button></div>
+                </form>
+            </div>
+        </li>
+        <li class="nav-item dropdown no-arrow mx-1">
+            <div class="nav-item dropdown no-arrow"><button class="btn btn-primary dropdown-toggle" aria-expanded="false" data-bs-toggle="dropdown" type="button"><span class="badge bg-danger badge-counter">3+</span><i class="fas fa-bell fa-fw"></i></button>
+                <div class="dropdown-menu dropdown-menu-end dropdown-list animated--grow-in">
+                    <h6 class="dropdown-header">alerts center</h6><a class="dropdown-item d-flex align-items-center" href="#">
+                        <div class="me-3">
+                            <div class="bg-primary icon-circle"><i class="fas fa-file-alt text-white"></i></div>
+                        </div>
+                        <div><span class="small text-gray-500">December 12, 2019</span>
+                            <p>A new monthly report is ready to download!</p>
+                        </div>
+                    </a><a class="dropdown-item d-flex align-items-center" href="#">
+                        <div class="me-3">
+                            <div class="bg-success icon-circle"><i class="fas fa-donate text-white"></i></div>
+                        </div>
+                        <div><span class="small text-gray-500">December 7, 2019</span>
+                            <p>$290.29 has been deposited into your account!</p>
+                        </div>
+                    </a><a class="dropdown-item d-flex align-items-center" href="#">
+                        <div class="me-3">
+                            <div class="bg-warning icon-circle"><i class="fas fa-exclamation-triangle text-white"></i></div>
+                        </div>
+                        <div><span class="small text-gray-500">December 2, 2019</span>
+                            <p>Spending Alert: We've noticed unusually high spending for your account.</p>
+                        </div>
+                    </a><a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
+                </div>
+            </div>
+        </li>
+        <li class="nav-item dropdown no-arrow mx-1">
+            <div class="nav-item dropdown no-arrow"><button class="btn btn-primary dropdown-toggle" aria-expanded="false" data-bs-toggle="dropdown" type="button"><span class="badge bg-danger badge-counter">7</span><i class="fas fa-envelope fa-fw"></i></button>
+                <div class="dropdown-menu dropdown-menu-end dropdown-list animated--grow-in">
+                    <h6 class="dropdown-header">alerts center</h6><a class="dropdown-item d-flex align-items-center" href="#">
+                        <div class="dropdown-list-image me-3"><img class="rounded-circle" src="assets/img/avatars/avatar4.jpeg">
+                            <div class="bg-success status-indicator"></div>
+                        </div>
+                        <div class="fw-bold">
+                            <div class="text-truncate"><span>Hi there! I am wondering if you can help me with a problem I've been having.</span></div>
+                            <p class="small text-gray-500 mb-0">Emily Fowler - 58m</p>
+                        </div>
+                    </a><a class="dropdown-item d-flex align-items-center" href="#">
+                        <div class="dropdown-list-image me-3"><img class="rounded-circle" src="assets/img/avatars/avatar2.jpeg">
+                            <div class="status-indicator"></div>
+                        </div>
+                        <div class="fw-bold">
+                            <div class="text-truncate"><span>I have the photos that you ordered last month!</span></div>
+                            <p class="small text-gray-500 mb-0">Jae Chun - 1d</p>
+                        </div>
+                    </a><a class="dropdown-item d-flex align-items-center" href="#">
+                        <div class="dropdown-list-image me-3"><img class="rounded-circle" src="assets/img/avatars/avatar3.jpeg">
+                            <div class="bg-warning status-indicator"></div>
+                        </div>
+                        <div class="fw-bold">
+                            <div class="text-truncate"><span>Last month's report looks great, I am very happy with the progress so far, keep up the good work!</span></div>
+                            <p class="small text-gray-500 mb-0">Morgan Alvarez - 2d</p>
+                        </div>
+                    </a><a class="dropdown-item d-flex align-items-center" href="#">
+                        <div class="dropdown-list-image me-3"><img class="rounded-circle" src="assets/img/avatars/avatar5.jpeg">
+                            <div class="bg-success status-indicator"></div>
+                        </div>
+                        <div class="fw-bold">
+                            <div class="text-truncate"><span>Am I a good boy? The reason I ask is because someone told me that people say this to all dogs, even if they aren't good...</span></div>
+                            <p class="small text-gray-500 mb-0">Chicken the Dog · 2w</p>
+                        </div>
+                    </a><a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
+                </div>
+            </div>
+            <div class="shadow dropdown-list dropdown-menu dropdown-menu-end" aria-labelledby="alertsDropdown"></div>
+        </li>
+        <div class="d-none d-sm-block topbar-divider"></div>
+        <li class="nav-item dropdown no-arrow">
+            <div class="nav-item dropdown show no-arrow"><button class="btn btn-primary dropdown-toggle" aria-expanded="true" data-bs-toggle="dropdown" type="button"><span class="d-none d-lg-inline me-2 text-gray-600 small">Valerie Luna</span><img class="border rounded-circle img-profile" src="assets/img/avatars/avatar1.jpeg"></button>
+                <div class="dropdown-menu show shadow dropdown-menu-end animated--grow-in" data-bs-popper="none"><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Logout</a></div>
+            </div>
+        </li>
+    </ul>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/js/theme.js"></script>
+</body>
+
+</html>

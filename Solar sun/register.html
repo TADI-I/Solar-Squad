@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html data-bs-theme="light" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Register - Sun Solution</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
+    <link rel="stylesheet" href="assets/css/Navigation-Menu.css">
+    <link rel="stylesheet" href="assets/css/Team.css">
+</head>
+
+<body class="bg-gradient-primary">
+    <div class="container">
+        <div class="card shadow-lg o-hidden border-0 my-5">
+            <div class="card-body p-0">
+                <div class="col-lg-10 offset-lg-1 offset-xxl-0" style="padding: 48px;">
+                    <div class="text-center">
+                        <h4 class="text-dark mb-4">Welcome ,Please Create an Account :)</h4>
+                    </div>
+                    <form class="user" id="registrationForm" novalidate="">
+                        <div class="row mb-3">
+                            <div class="col-sm-6 mb-3 mb-sm-0"><input class="form-control form-control form-control-user" type="text" id="firstName" name="first_name" placeholder="First Name" required=""></div>
+                            <div class="col-sm-6"><input class="form-control form-control form-control-user" type="text" id="lastName" name="last_name" placeholder="Last Name" required=""></div>
+                        </div>
+                        <div class="mb-3"><input class="form-control form-control form-control-user" type="email" id="inputEmail" name="email" placeholder="Email Address" required=""></div>
+                        <div class="row mb-3">
+                            <div class="col-sm-6 mb-3 mb-sm-0"><input class="form-control form-control form-control-user" type="password" autocomplete="new-password" id="passwordInput" name="password" placeholder="Password" required="">
+                                <div class="progress mt-2">
+                                    <div id="passwordProgressBar" class="progress-bar" role="progressbar" style="width:0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                <ul class="small mt-2" id="passwordRules">
+                                    <li id="rule-length">Between 8-16 characters</li>
+                                    <li id="rule-lowercase">At least one lowercase letter</li>
+                                    <li id="rule-uppercase">At least one uppercase letter</li>
+                                    <li id="rule-number">At least one number</li>
+                                    <li id="rule-special">At least one special character</li>
+                                    <li id="rule-nospaces">No spaces</li>
+                                    <li id="rule-noconsecutive">No 4 consecutive identical characters</li>
+                                    <li id="rule-initials">No initials or surname</li>
+                                </ul>
+                            </div>
+                            <div class="col-sm-6"><input class="form-control form-control form-control-user" type="password" autocomplete="new-password" id="repeatPasswordInput" name="password_repeat" placeholder="Repeat Password" required=""></div>
+                        </div><button class="btn btn-primary d-block btn-user w-100" id="registerBtn" type="submit">Register Account</button>
+                    </form>
+                    <div class="text-center"><a class="small" href="forgot-password.html">Forgot Password?</a></div>
+                    <div class="text-center"><a class="small" href="login.html">Already have an account? Login!</a></div><script>
+const studentNumber = "12345678";  // Replace dynamically if needed
+const initials = "JS";  // Replace with actual initials
+const surname = "Smith";  // Replace with actual surname
+
+const passwordInput = document.getElementById('passwordInput');
+const repeatPasswordInput = document.getElementById('repeatPasswordInput');
+const progressBar = document.getElementById('passwordProgressBar');
+const rules = {
+    length: document.getElementById('rule-length'),
+    lowercase: document.getElementById('rule-lowercase'),
+    uppercase: document.getElementById('rule-uppercase'),
+    number: document.getElementById('rule-number'),
+    special: document.getElementById('rule-special'),
+    nospaces: document.getElementById('rule-nospaces'),
+    noconsecutive: document.getElementById('rule-noconsecutive'),
+    studentnumber: document.getElementById('rule-studentnumber'),
+    initials: document.getElementById('rule-initials'),
+};
+
+passwordInput.addEventListener('input', updatePasswordStrength);
+
+function updatePasswordStrength() {
+    const password = passwordInput.value;
+    let passedChecks = 0;
+
+    if (password.length >= 8 && password.length <= 16) markRulePassed(rules.length), passedChecks++;
+    else markRuleFailed(rules.length);
+
+    if (/[a-z]/.test(password)) markRulePassed(rules.lowercase), passedChecks++;
+    else markRuleFailed(rules.lowercase);
+
+    if (/[A-Z]/.test(password)) markRulePassed(rules.uppercase), passedChecks++;
+    else markRuleFailed(rules.uppercase);
+
+    if (/\d/.test(password)) markRulePassed(rules.number), passedChecks++;
+    else markRuleFailed(rules.number);
+
+    if (/[!@#$%^*()\-_=+;:,.\/?`~]/.test(password)) markRulePassed(rules.special), passedChecks++;
+    else markRuleFailed(rules.special);
+
+    if (!/\s/.test(password)) markRulePassed(rules.nospaces), passedChecks++;
+    else markRuleFailed(rules.nospaces);
+
+    if (!hasConsecutiveChars(password, 4)) markRulePassed(rules.noconsecutive), passedChecks++;
+    else markRuleFailed(rules.noconsecutive);
+
+    if (!password.includes(studentNumber)) markRulePassed(rules.studentnumber), passedChecks++;
+    else markRuleFailed(rules.studentnumber);
+
+    if (!(password.toLowerCase().includes(initials.toLowerCase()) || password.toLowerCase().includes(surname.toLowerCase()))) {
+        markRulePassed(rules.initials);
+        passedChecks++;
+    } else markRuleFailed(rules.initials);
+
+    const progress = (passedChecks / 9) * 100;
+    progressBar.style.width = progress + '%';
+    progressBar.setAttribute('aria-valuenow', progress);
+
+    if (progress < 100) progressBar.classList.remove('bg-success'), progressBar.classList.add('bg-warning');
+    else progressBar.classList.remove('bg-warning'), progressBar.classList.add('bg-success');
+}
+
+function markRulePassed(rule) {
+    rule.style.color = 'green';
+    rule.style.textDecoration = 'line-through';
+}
+
+function markRuleFailed(rule) {
+    rule.style.color = 'red';
+    rule.style.textDecoration = 'none';
+}
+
+function hasConsecutiveChars(str, length) {
+    let count = 1;
+    for (let i = 1; i < str.length; i++) {
+        if (str[i] === str[i - 1]) count++;
+        else count = 1;
+        if (count >= length) return true;
+    }
+    return false;
+}
+
+document.getElementById('registrationForm').addEventListener('submit', function(event) {
+    updatePasswordStrength();
+
+    if (progressBar.getAttribute('aria-valuenow') !== '100') {
+        event.preventDefault();
+        alert("Please make sure your password meets all requirements.");
+        return;
+    }
+
+    if (passwordInput.value !== repeatPasswordInput.value) {
+        event.preventDefault();
+        alert("Passwords do not match.");
+        return;
+    }
+});
+
+</script>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/js/theme.js"></script>
+</body>
+
+</html>
